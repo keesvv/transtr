@@ -20,11 +20,12 @@ fn main() {
     }
 
     stdin().read_to_string(&mut input).unwrap();
+    input = input.trim().to_string();
     output = input.clone();
 
     for ttype in transfrm_types.iter() {
         output = ttype.transform(output.as_str());
     }
  
-    print!("{}", output.trim());
+    print!("{}", output);
 }
