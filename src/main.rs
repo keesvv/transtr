@@ -1,12 +1,11 @@
 mod transfrm;
 
-use std::{convert::TryFrom, env::args, io::{Read, stdin}};
-use transfrm::TransformType;
+use std::{borrow::Borrow, convert::TryFrom, env::args, io::{Read, stdin}};
+use transfrm::{TransformType, sequence::TransformSequence};
 
 fn main() {
     let mut args: Vec<String> = args().collect();
     let mut input = String::new();
-    let mut output;
     let mut transfrm_types: Vec<TransformType> = Vec::new();
 
     args.drain(0..1);
@@ -21,11 +20,7 @@ fn main() {
 
     stdin().read_to_string(&mut input).unwrap();
     input = input.trim().to_string();
-    output = input.clone();
-
-    for ttype in transfrm_types.iter() {
-        output = ttype.transform(output.as_str());
-    }
  
-    print!("{}", output);
+    print!("{}", TransformSequence::new(transfrm_types.borrow())
+        .transform_all(&input));
 }
